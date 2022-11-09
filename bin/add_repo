@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use App::PerlDiver::Repo;
+use PerlDiver::Schema;
+
+die unless @ARGV;
+
+my $repo = App::PerlDiver::Repo->new(uri => $ARGV[0]);
+
+my $sch = PerlDiver::Schema->get_schema;
+
+my $rs = $sch->resultset('Repo');
+
+$rs->create({
+  uri => $repo->uri,
+  owner => $repo->owner,
+  name => $repo->name,
+});

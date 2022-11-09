@@ -1,0 +1,33 @@
+#!/bin/bash
+
+dir=$(dirname "$0")
+# shellcheck source=bin/func_defs
+. "$dir/func_defs"
+
+check_vars
+
+root_user=${1:-root}
+root_pass=${2:-''}
+
+echo $root_user/$root_pass
+
+echo mysql -u$root_user -p$root_pass -h$DIVER_DB_HOST
+
+mysql -u$root_user -p$root_pass -h$DIVER_DB_HOST <<END_OF_SQL
+drop database if exists $DIVER_DB_NAME;
+create database $DIVER_DB_NAME;
+drop user if exists '$DIVER_DB_USER'@'%';
+select 1;
+flush privileges;
+select 2;
+create user '$DIVER_DB_USER'@'%' identified by '$DIVER_DB_PASS';
+select 3;
+grant all on $DIVER_DB_NAME.* to '$DIVER_DB_USER'@'%';
+select 4;
+END_OF_SQL
+
+echo DB created
+
+mysql -u$root_user -p$root_pass -h$DIVER_DB_HOST -D$DIVER_DB_NAME < db/perldiver.sql
+
+echo DB tables created

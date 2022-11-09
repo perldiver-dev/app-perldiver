@@ -4,7 +4,12 @@ use 5.34.0;
 
 use Moose;
 use Moose::Util::TypeConstraints;
+
+use File::Find::Rule ();
+use File::Find::Rule::Perl ();
 use URI;
+use File::Path 'remove_tree';
+use Git::Repository;
 
 subtype 'App::PerlDiver::URI' =>
   as 'URI';
@@ -29,8 +34,6 @@ has [ qw[owner name] ] => (
 sub _build_owner {
   my $self = shift;
 
-  warn $self->uri->path, "\n";
-
   my (undef, $owner, $name) = split m[/], $self->uri->path;
 
   $self->{name} = $name;
@@ -48,4 +51,38 @@ sub _build_name {
   return $name;
 }
 
+has start_dir => (
+  is => 'ro',
+  isa => 'Str',
+  lazy_build => 1,
+);
+
+sub _build_start_dir {
+  my $self = shift;
+  return $self->owner . '-' . $self->name;
+}
+
+has files => (
+  is => 'ro',
+  isa => 'ArrayRef',
+  lazy_build => 1,
+);
+
+sub _build_files {
+  my $self = shift;
+
+  return [ File::Find::Rule->perl_file->in($self->start_dir) ];
+}
+
+sub clone {
+  my $self = shift;
+
+  Git::Repository->run( clone => $self->uri => $self->start_dir );
+}
+
+sub unclone {
+  my $self = shift;
+
+  remove_tree($self->start_dir);
+}
 1;

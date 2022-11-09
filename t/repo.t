@@ -13,7 +13,7 @@ isa_ok($repo, 'App::PerlDiver::Repo');
 is($repo->owner, 'davorg',        'Correct owner');
 is($repo->name,  'app-perldiver', 'Correct name');
 
-ok(my $repo = App::PerlDiver::Repo->new(uri => 'https://github.com/davorg/app-perldiver'),
+ok($repo = App::PerlDiver::Repo->new(uri => 'https://github.com/davorg/app-perldiver'),
    'Got an object');
 isa_ok($repo, 'App::PerlDiver::Repo');
 
