@@ -1,0 +1,24 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use PerlDiver::Schema;
+use App::PerlDiver;
+
+my ($owner, $name) = @ARGV;
+
+my $sch = PerlDiver::Schema->get_schema;
+
+my $rs = $sch->resultset('Repo');
+
+my ($repo) = $rs->search({
+  owner => $owner,
+  name  => $name,
+});
+
+die unless $repo;
+
+my $app = App::PerlDiver->new(repo => $repo->uri);
+
+$app->run;
