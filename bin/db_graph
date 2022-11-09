@@ -1,0 +1,11 @@
+#!/bin/bash
+
+VERSION=$1
+
+if [[ -z $VERSION ]];
+then
+  echo Usage: $0 VERSION
+  exit 1
+fi
+
+sqlt-graph -f=MySQL --graphattr label="PerlDiver Database V$VERSION" db/perldiver.sql > db/perldiver.png
