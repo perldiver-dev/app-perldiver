@@ -1,11 +1,12 @@
 package App::PerlDiver;
 
 use 5.34.0;
+use feature 'say';
 
 use Moose;
 use Moose::Util::TypeConstraints;
 
-use Module::Pluggable;
+use Module::Pluggable instantiate => 'new';
 use Path::Tiny;
 
 use App::PerlDiver::Repo;
@@ -45,7 +46,7 @@ sub run {
   $self->repo->clone;
 
   $self->gather($run);
-  $self->render;
+  $self->render($run);
 
   $self->repo->unclone;
 }
@@ -69,10 +70,29 @@ sub gather {
       file_id => $db_file->id,
     });
   }
+
+  for ($self->plugins) {
+    if ($_->can('gather')) {
+      say "[Gather] Running ", ref $_;
+      $_->gather($run);
+    } else {
+      say "[Gather] Skipping " . ref $_;
+    }
+  }
 }
 
 sub render {
   my $self = shift;
+    my ($run) = @_;
+
+  for ($self->plugins) {
+    if ($_->can('render')) {
+      say "[Render] Running ", ref $_;
+      $_->render($run);
+    } else {
+      say "[Render] Skipping " . ref $_;
+    }
+  }
 }
 
 1;
