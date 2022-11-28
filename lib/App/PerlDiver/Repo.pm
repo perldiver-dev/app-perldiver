@@ -1,6 +1,6 @@
 package App::PerlDiver::Repo;
 
-use 5.34.0;
+use 5.034000;
 
 use Moose;
 use Moose::Util::TypeConstraints;
@@ -34,7 +34,7 @@ has [ qw[owner name] ] => (
 sub _build_owner {
   my $self = shift;
 
-  my (undef, $owner, $name) = split m[/], $self->uri->path;
+  my (undef, $owner, $name) = split m[/]x, $self->uri->path;
 
   $self->{name} = $name;
 
@@ -44,7 +44,7 @@ sub _build_owner {
 sub _build_name {
   my $self = shift;
 
-  my (undef, $owner, $name) = split m[/], $self->uri->path;
+  my (undef, $owner, $name) = split m[/]x, $self->uri->path;
 
   $self->{owner} = $owner;
 
@@ -78,11 +78,15 @@ sub clone {
   my $self = shift;
 
   Git::Repository->run( clone => $self->uri => $self->start_dir );
+
+  return;
 }
 
 sub unclone {
   my $self = shift;
 
   remove_tree($self->start_dir);
+
+  return;
 }
 1;

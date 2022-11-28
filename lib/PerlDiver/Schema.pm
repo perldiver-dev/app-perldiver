@@ -40,9 +40,6 @@ sub get_schema {
     { mysql_enable_utf8 => 1, quote_char => '`' },
   );
 
-  # For caching.
-  $DBIx::Class::ResultSourceHandle::thaw_schema = $sch;
-
   return $sch;
 }
 

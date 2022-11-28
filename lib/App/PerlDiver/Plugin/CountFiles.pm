@@ -2,7 +2,7 @@ package App::PerlDiver::Plugin::CountFiles;
 
 use strict;
 use warnings;
-use 5.34.0;
+use 5.034000;
 
 use Moose;
 
@@ -13,6 +13,8 @@ sub render {
   say $run->run_files->count;
 
   $self->plot($run->repo);
+
+  return;
 }
 
 sub plot {
@@ -22,6 +24,8 @@ sub plot {
   for ($repo->runs) {
     say $_->date, ' : ', $_->run_files->count;
   }
+
+  return;
 }
 
 1;

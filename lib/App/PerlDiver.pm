@@ -1,6 +1,6 @@
 package App::PerlDiver;
 
-use 5.34.0;
+use 5.034000;
 use feature 'say';
 
 use Moose;
@@ -8,6 +8,8 @@ use Moose::Util::TypeConstraints;
 
 use Module::Pluggable instantiate => 'new';
 use Path::Tiny;
+use Template;
+use Carp;
 
 use App::PerlDiver::Repo;
 use PerlDiver::Schema;
@@ -33,6 +35,30 @@ sub _build_schema {
   return PerlDiver::Schema->get_schema;
 }
 
+has tt => (
+  is => 'ro',
+  isa => 'Template',
+  lazy_build => 1,
+);
+
+sub _build_tt {
+  my $self = shift;
+  return Template->new( $self->tt_config );
+}
+
+has tt_config => (
+  is => 'ro',
+  isa => 'HashRef',
+  lazy_build => 1,
+);
+
+sub _build_tt_config {
+  return {
+    INCLUDE_PATH => [qw/src tt_lib/],,
+    OUTPUT_PATH => 'out',
+  };
+}
+
 sub run {
   my $self = shift;
 
@@ -49,6 +75,8 @@ sub run {
   $self->render($run);
 
   $self->repo->unclone;
+
+  return;
 }
 
 sub gather {
@@ -79,20 +107,25 @@ sub gather {
       say "[Gather] Skipping " . ref $_;
     }
   }
+
+  return;
 }
 
 sub render {
   my $self = shift;
-    my ($run) = @_;
+  my ($run) = @_;
 
-  for ($self->plugins) {
-    if ($_->can('render')) {
-      say "[Render] Running ", ref $_;
-      $_->render($run);
-    } else {
-      say "[Render] Skipping " . ref $_;
-    }
-  }
+  my @plugins = map { $_->can('render') } $self->plugins;
+
+  my $config = {
+    run => $run,
+    plugins => \@plugins,
+  };
+
+  $self->tt->process('index.html.tt', $config, 'index.html')
+    or croak $self->tt->error;
+
+  return;
 }
 
 1;

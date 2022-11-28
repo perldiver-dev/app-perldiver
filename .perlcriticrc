@@ -1,0 +1,4 @@
+# ProhibitUnusedPrivateSubroutines - because Moose needs unused private subs
+# RequireArgUnpacking - because it doesn't like "my $self = shift"
+# RequireExplicitPackage - because DBIC::Schema::Loader creates modules that start "use utf8"
+exclude = ProhibitUnusedPrivateSubroutines RequireArgUnpacking RequireExplicitPackage
