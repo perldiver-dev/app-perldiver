@@ -10,7 +10,6 @@ requires 'Moose::Util::TypeConstraints';
 requires 'MooseX::MarkAsMethods';
 requires 'MooseX::NonMoose';
 requires 'Path::Tiny';
-requires 'PerlDiver::Schema';
 requires 'Template';
 requires 'Test::More';
 requires 'URI';
