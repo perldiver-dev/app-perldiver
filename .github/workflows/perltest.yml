@@ -29,6 +29,7 @@ jobs:
       - run: perl -V
       - run: cpanm --installdeps .
       - run: prove -lv t
+      - run: pwd
       - name: Archive CPAN logs on Unix
         if: ${{ failure() && matrix.os == 'ubuntu-latest' }}
         uses: actions/upload-artifact@v3
