@@ -13,3 +13,5 @@ requires 'Path::Tiny';
 requires 'Template';
 requires 'Test::More';
 requires 'URI';
+
+test_requires 'LWP';
