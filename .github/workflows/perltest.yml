@@ -29,6 +29,13 @@ jobs:
       - run: perl -V
       - run: cpanm --installdeps .
       - run: prove -lv t
+      - name: Archive CPAN logs on Unix
+        if: ${{ failure() && matrix.os == 'ubuntu-latest' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: cpan_log
+          path: .cpanm/work/*/build.log
+          retention-days: 5
 
   coverage:
     runs-on: ubuntu-latest
