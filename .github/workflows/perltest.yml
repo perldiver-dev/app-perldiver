@@ -49,4 +49,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HARNESS_PERL_SWITCHES: -MDevel::Cover=-report,Coveralls
-        run: prove -lv t && cover
+        run: prove -lv t && cover -report Coveralls
