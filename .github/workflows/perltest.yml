@@ -27,7 +27,7 @@ jobs:
         with:
           perl-version: ${{ matrix.perl }}
       - run: pwd && perl -V
-      - run: cpanm --installdeps .
+      - run: cpanm --installdeps --notest .
       - run: prove -lv t
       - name: Archive CPAN logs on Unix
         if: ${{ failure() && matrix.os == 'ubuntu-latest' }}
