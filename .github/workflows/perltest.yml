@@ -48,4 +48,4 @@ jobs:
       - name: Coverage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: perl -MDevel::Cover=-report,Coveralls prove -lv t && cover
+        run: perl -MDevel::Cover=-report,Coveralls /usr/bin/prove -lv t && cover
