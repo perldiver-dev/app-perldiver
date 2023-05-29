@@ -8,7 +8,10 @@ use PerlDiver::Schema;
 
 die unless @ARGV;
 
-my $repo = App::PerlDiver::Repo->new(uri => $ARGV[0]);
+my $arg = shift @ARGV;
+$arg =~ s/\.git$//;
+
+my $repo = App::PerlDiver::Repo->new(uri => $arg);
 
 my $sch = PerlDiver::Schema->get_schema;
 

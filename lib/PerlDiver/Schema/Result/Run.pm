@@ -57,6 +57,11 @@ __PACKAGE__->table("run");
   default_value: 'current_timestamp()'
   is_nullable: 0
 
+=head2 data
+
+  data_type: 'longtext'
+  is_nullable: 1
+
 =head2 notes
 
   data_type: 'longtext'
@@ -76,6 +81,8 @@ __PACKAGE__->add_columns(
     default_value => "current_timestamp()",
     is_nullable => 0,
   },
+  "data",
+  { data_type => "longtext", is_nullable => 1 },
   "notes",
   { data_type => "longtext", is_nullable => 1 },
 );
@@ -125,8 +132,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-11-09 19:25:00
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GBmfG9KONF3CniVhCqU4AQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2023-05-29 15:25:24
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:xoCt3WrrSxvAz+ZAc55CjA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

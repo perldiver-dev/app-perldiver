@@ -6,6 +6,8 @@ use warnings;
 use PerlDiver::Schema;
 use App::PerlDiver;
 
+die "Usage: $0 repo_owner repo_name\n" unless @ARGV == 2;
+
 my ($owner, $name) = @ARGV;
 
 my $sch = PerlDiver::Schema->get_schema;

@@ -9,6 +9,7 @@ use Moose::Util::TypeConstraints;
 use Module::Pluggable instantiate => 'new';
 use Path::Tiny;
 use Template;
+use JSON;
 use Carp;
 
 use App::PerlDiver::Repo;
@@ -59,6 +60,16 @@ sub _build_tt_config {
   };
 }
 
+has json => (
+  is => 'ro',
+  isa => 'JSON',
+  lazy_build => 1,
+);
+
+sub _build_json {
+  return JSON->new->pretty->utf8;
+}
+
 sub run {
   my $self = shift;
 
@@ -68,6 +79,7 @@ sub run {
   });
 
   my $run = $db_repo->add_to_runs({});
+  $run->discard_changes;
 
   $self->repo->clone;
 
@@ -99,14 +111,19 @@ sub gather {
     });
   }
 
+  my %data;
   for ($self->plugins) {
     if ($_->can('gather')) {
       say "[Gather] Running ", ref $_;
-      $_->gather($run);
+      my $data = $_->gather($run);
+      my $name = delete $data->{name};
+      $data{$name} = $data;
     } else {
       say "[Gather] Skipping " . ref $_;
     }
   }
+
+  $run->update({ data => $self->json->encode(\%data) });
 
   return;
 }
@@ -115,7 +132,16 @@ sub render {
   my $self = shift;
   my ($run) = @_;
 
-  my @plugins = map { $_->can('render') } $self->plugins;
+  my @plugins;
+  
+  for ($self->plugins) {
+    if ($_->can('render')) {
+      say "[Render] Running ", ref $_;
+      push @plugins, $_;
+    } else {
+      say "[Render] Skipping " . ref $_;
+    }
+  }
 
   my $config = {
     run => $run,

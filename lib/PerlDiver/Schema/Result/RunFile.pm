@@ -56,6 +56,11 @@ __PACKAGE__->table("run_file");
   is_foreign_key: 1
   is_nullable: 0
 
+=head2 data
+
+  data_type: 'longtext'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -65,6 +70,8 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "file_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
+  "data",
+  { data_type => "longtext", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -112,8 +119,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-11-09 19:25:00
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4nZzpASJmigfnVIgLpQtKw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2023-05-29 15:25:24
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hn+vald9Vv+avZmk4Kz5QA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
