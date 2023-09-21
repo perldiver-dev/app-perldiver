@@ -11,6 +11,7 @@ requires 'MooseX::MarkAsMethods';
 requires 'MooseX::NonMoose';
 requires 'Path::Tiny';
 requires 'Template';
+requires 'Test::Exception';
 requires 'Test::LWP::UserAgent';
 requires 'Test::More';
 requires 'URI';
