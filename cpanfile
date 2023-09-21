@@ -1,5 +1,5 @@
 requires 'Carp';
-requires 'feature';
+requires 'Feature::Compat::Class';
 requires 'File::Find::Rule';
 requires 'File::Find::Rule::Perl';
 requires 'File::Path';
@@ -11,6 +11,7 @@ requires 'MooseX::MarkAsMethods';
 requires 'MooseX::NonMoose';
 requires 'Path::Tiny';
 requires 'Template';
+requires 'Test::LWP::UserAgent';
 requires 'Test::More';
 requires 'URI';
 
