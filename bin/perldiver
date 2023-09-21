@@ -15,9 +15,9 @@ my ($gather, $render) = (1, 1);
 $gather = 0 if $opts{render_only};
 $render = 0 if $opts{gather_only};
 
-die "Usage: $0 repo_owner repo_name\n" unless @ARGV == 2;
+die "Usage: $0 repo_owner repo_name auth_token\n" unless @ARGV == 3;
 
-my ($owner, $name) = @ARGV;
+my ($owner, $name, $token) = @ARGV;
 
 my $sch = PerlDiver::Schema->get_schema;
 
@@ -34,6 +34,7 @@ my $app = App::PerlDiver->new(
   repo => $repo->uri,
   gather => $gather,
   render => $render,
+  token  => $token,
 );
 
 $app->run;

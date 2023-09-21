@@ -14,6 +14,7 @@ use Carp;
 
 use App::PerlDiver::Repo;
 use PerlDiver::Schema;
+use PerlDiver::AuthClient;
 
 has do_gather => (
   is => 'ro',
@@ -38,6 +39,12 @@ has repo => (
   isa => 'App::PerlDiver::Repo',
   required => 1,
   coerce => 1,
+);
+
+has token => (
+  is => 'ro',
+  isa => 'Str',
+  required => 1,
 );
 
 has schema => (
@@ -86,6 +93,12 @@ sub _build_json {
 
 sub run {
   my $self = shift;
+
+  PerlDiver::AuthClient->new->check_auth(
+    $self->repo->owner,
+    $self->repo->name,
+    $self->token,
+  );
 
   my ($db_repo) = $self->schema->resultset('Repo')->search({
     name => $self->repo->name,
