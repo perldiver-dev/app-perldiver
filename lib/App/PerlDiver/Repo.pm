@@ -71,7 +71,9 @@ has files => (
 sub _build_files {
   my $self = shift;
 
-  return [ File::Find::Rule->perl_file->in($self->start_dir) ];
+  my $start_dir = $self->start_dir;
+
+  return [ map { s|^$start_dir/|| && $_ } File::Find::Rule->perl_file->in($start_dir) ];
 }
 
 sub clone {

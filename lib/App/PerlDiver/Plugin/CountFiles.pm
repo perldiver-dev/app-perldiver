@@ -4,7 +4,6 @@ use strict;
 use warnings;
 use 5.034000;
 
-use JSON;
 use Moose;
 
 has name => (
@@ -13,11 +12,7 @@ has name => (
   default => 'CountFiles',
 );
 
-has json => (
-  is => 'ro',
-  isa => 'JSON',
-  default => sub { JSON->new->pretty },
-);
+with 'App::PerlDiver::Role::Plugin';
 
 sub gather {
   my $self = shift;
@@ -36,6 +31,22 @@ sub render {
   my $data = $self->json->decode($run->data);
 
   return $data->{$self->name}{value};
+}
+
+sub data {
+  my $self = shift;
+  my ($repo) = @_;
+
+  my @data;
+
+  for ($repo->runs) {
+    push @data, {
+      date => $_->date,
+      value => $self->render($_),
+    };
+  }
+
+  return \@data;
 }
 
 sub plot {

@@ -3,8 +3,17 @@
 use strict;
 use warnings;
 
+use Getopt::Long;
+
 use PerlDiver::Schema;
 use App::PerlDiver;
+
+my %opts;
+GetOptions(\%opts, 'help|h', 'gather_only|g', 'render_only|r');
+
+my ($gather, $render) = (1, 1);
+$gather = 0 if $opts{render_only};
+$render = 0 if $opts{gather_only};
 
 die "Usage: $0 repo_owner repo_name\n" unless @ARGV == 2;
 
@@ -21,6 +30,10 @@ my ($repo) = $rs->search({
 
 die unless $repo;
 
-my $app = App::PerlDiver->new(repo => $repo->uri);
+my $app = App::PerlDiver->new(
+  repo => $repo->uri,
+  gather => $gather,
+  render => $render,
+);
 
 $app->run;

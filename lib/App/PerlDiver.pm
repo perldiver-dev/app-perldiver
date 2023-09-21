@@ -15,6 +15,20 @@ use Carp;
 use App::PerlDiver::Repo;
 use PerlDiver::Schema;
 
+has do_gather => (
+  is => 'ro',
+  isa => 'Bool',
+  init_arg => 'gather',
+  default => 1,
+);
+
+has do_render => (
+  is => 'ro',
+  isa => 'Bool',
+  init_arg => 'render',
+  default => 1,
+);
+
 coerce 'App::PerlDiver::Repo' =>
   from 'Str' =>
   via { App::PerlDiver::Repo->new(uri => $_) };
@@ -78,13 +92,24 @@ sub run {
     owner => $self->repo->owner,
   });
 
-  my $run = $db_repo->add_to_runs({});
-  $run->discard_changes;
+  my $run;
+  
+  if ($self->do_gather) {
+    $run = $db_repo->add_to_runs({});
+    $run->discard_changes;
+  } else {
+    ($run) = $db_repo->runs->search({}, {
+      order_by => { -desc => 'date' },
+      rows => 1,
+    });
+
+    die "No runs found. Please rerun including a gather phase.\n" unless $run;
+  }
 
   $self->repo->clone;
 
-  $self->gather($run);
-  $self->render($run);
+  $self->gather($run) if $self->do_gather;
+  $self->render($run) if $self->do_render;
 
   $self->repo->unclone;
 
