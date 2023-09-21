@@ -1,0 +1,14 @@
+#!/bin/bash
+
+dir=$(dirname "$0")
+# shellcheck source=bin/func_defs
+. "$dir/func_defs"
+
+check_vars
+
+if [ $# -eq 0 ]
+then
+  mysql -h"$PD_AUTH_DB_HOST" -u"$PD_AUTH_DB_USER" -p"$PD_AUTH_DB_PASS" "$PD_AUTH_DB_NAME"
+else
+  echo "$*" | mysql -t -h"$PD_AUTH_DB_HOST" -u"$PD_AUTH_DB_USER" -p"$PD_AUTH_DB_PASS" "$PD_AUTH_DB_NAME"
+fi

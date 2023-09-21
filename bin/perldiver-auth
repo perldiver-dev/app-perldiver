@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use feature 'say';
+
+use Getopt::Long;
+
+use PerlDiver::AuthClient;
+
+my %opts;
+GetOptions(\%opts, 'help|h', 'api_key|k=s', 'repo|r=s');
+
+my $usage = "Usage: $0 --api_key <api_key> --repo <repo_owner/repo_name>";
+
+if ($opts{help}) {
+  say $usage;
+  exit 0;
+}
+
+die "$usage\n" unless $opts{api_key} and $opts{repo};
+
+my ($repo_owner, $repo_name) = split '/', $opts{repo};
+
+my $auth = PerlDiver::AuthClient->new;
+
+my $token = $auth->get_auth($repo_owner, $repo_name, $opts{api_key});
+
+say $token;
+
+exit 0;
