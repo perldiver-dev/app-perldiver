@@ -52,3 +52,5 @@ class PerlDiver::AuthClient {
     return 1;
   }
 }
+
+1;
