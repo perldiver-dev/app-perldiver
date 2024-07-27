@@ -44,5 +44,6 @@ jobs:
       - name: Coverage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: cover -test -report Coveralls
+          HARNESS_PERL_SWITCHES: -MDevel::Cover
+-       run: prove -lv t && cover -report Coveralls -ignore_re t/
 
