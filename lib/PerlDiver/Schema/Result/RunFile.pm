@@ -41,7 +41,6 @@ __PACKAGE__->table("run_file");
 =head2 id
 
   data_type: 'integer'
-  is_auto_increment: 1
   is_nullable: 0
 
 =head2 run_id
@@ -65,7 +64,7 @@ __PACKAGE__->table("run_file");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
+  { data_type => "integer", is_nullable => 0 },
   "run_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "file_id",

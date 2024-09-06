@@ -1,7 +1,7 @@
 schema_class Succession::Schema
 
 <connect_info>
-  dsn	dbi:mysql:<some database>
+  dsn	dbi:SQLite:dbname=db/perldiver.db
   user	<some user>
   pass	<some password>
 </connect_info>
