@@ -19,11 +19,9 @@ __PACKAGE__->load_namespaces;
 __PACKAGE__->meta->make_immutable(inline_constructor => 0);
 
 sub get_schema {
-  my $dsn = "dbi:SQLite:dbname=db/perldiver.db";
-
-  my $sch = __PACKAGE__->connect($dsn);
-
-  return $sch;
+    my $self = shift;
+    my $config = shift || 'db/perldiver.conf';
+    return $self->connect($config);
 }
 
 1;
