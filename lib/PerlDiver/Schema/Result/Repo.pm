@@ -41,6 +41,7 @@ __PACKAGE__->table("repo");
 =head2 id
 
   data_type: 'integer'
+  is_auto_increment: 1
   is_nullable: 0
 
 =head2 name
@@ -65,7 +66,7 @@ __PACKAGE__->table("repo");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "name",
   { data_type => "char", is_nullable => 0, size => 50 },
   "uri",
@@ -119,8 +120,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-11-09 19:25:00
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:6A2vHhI86c5zYTiEucdDYw
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2024-09-06 16:04:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:73LI5d33bk/DFsJLiUayYQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

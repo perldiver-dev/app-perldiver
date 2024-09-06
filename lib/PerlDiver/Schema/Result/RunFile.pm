@@ -41,6 +41,7 @@ __PACKAGE__->table("run_file");
 =head2 id
 
   data_type: 'integer'
+  is_auto_increment: 1
   is_nullable: 0
 
 =head2 run_id
@@ -57,20 +58,20 @@ __PACKAGE__->table("run_file");
 
 =head2 data
 
-  data_type: 'longtext'
+  data_type: 'json'
   is_nullable: 1
 
 =cut
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "run_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "file_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "data",
-  { data_type => "longtext", is_nullable => 1 },
+  { data_type => "json", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -99,7 +100,7 @@ __PACKAGE__->belongs_to(
   "file",
   "PerlDiver::Schema::Result::File",
   { id => "file_id" },
-  { is_deferrable => 1, on_delete => "RESTRICT", on_update => "RESTRICT" },
+  { is_deferrable => 0, on_delete => "RESTRICT", on_update => "RESTRICT" },
 );
 
 =head2 run
@@ -114,12 +115,12 @@ __PACKAGE__->belongs_to(
   "run",
   "PerlDiver::Schema::Result::Run",
   { id => "run_id" },
-  { is_deferrable => 1, on_delete => "RESTRICT", on_update => "RESTRICT" },
+  { is_deferrable => 0, on_delete => "RESTRICT", on_update => "RESTRICT" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2023-05-29 15:25:24
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hn+vald9Vv+avZmk4Kz5QA
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2024-09-06 16:04:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cneOkV3SwiPUzxQZXJjpoA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

@@ -41,6 +41,7 @@ __PACKAGE__->table("run");
 =head2 id
 
   data_type: 'integer'
+  is_auto_increment: 1
   is_nullable: 0
 
 =head2 repo_id
@@ -52,13 +53,12 @@ __PACKAGE__->table("run");
 =head2 date
 
   data_type: 'datetime'
-  datetime_undef_if_invalid: 1
-  default_value: 'current_timestamp'
+  default_value: current_timestamp
   is_nullable: 0
 
 =head2 data
 
-  data_type: 'longtext'
+  data_type: 'json'
   is_nullable: 1
 
 =head2 notes
@@ -70,18 +70,17 @@ __PACKAGE__->table("run");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "repo_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "date",
   {
-    data_type => "datetime",
-    datetime_undef_if_invalid => 1,
-    default_value => "current_timestamp",
-    is_nullable => 0,
+    data_type     => "datetime",
+    default_value => \"current_timestamp",
+    is_nullable   => 0,
   },
   "data",
-  { data_type => "longtext", is_nullable => 1 },
+  { data_type => "json", is_nullable => 1 },
   "notes",
   { data_type => "longtext", is_nullable => 1 },
 );
@@ -112,7 +111,7 @@ __PACKAGE__->belongs_to(
   "repo",
   "PerlDiver::Schema::Result::Repo",
   { id => "repo_id" },
-  { is_deferrable => 1, on_delete => "RESTRICT", on_update => "RESTRICT" },
+  { is_deferrable => 0, on_delete => "RESTRICT", on_update => "RESTRICT" },
 );
 
 =head2 run_files
@@ -131,8 +130,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2023-05-29 15:25:24
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:xoCt3WrrSxvAz+ZAc55CjA
+# Created by DBIx::Class::Schema::Loader v0.07051 @ 2024-09-06 16:04:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:U2ufaaXKoUh3aFInWa8Thg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
