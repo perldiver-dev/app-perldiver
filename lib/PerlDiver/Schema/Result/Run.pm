@@ -41,7 +41,6 @@ __PACKAGE__->table("run");
 =head2 id
 
   data_type: 'integer'
-  is_auto_increment: 1
   is_nullable: 0
 
 =head2 repo_id
@@ -54,7 +53,7 @@ __PACKAGE__->table("run");
 
   data_type: 'datetime'
   datetime_undef_if_invalid: 1
-  default_value: 'current_timestamp()'
+  default_value: 'current_timestamp'
   is_nullable: 0
 
 =head2 data
@@ -71,14 +70,14 @@ __PACKAGE__->table("run");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
+  { data_type => "integer", is_nullable => 0 },
   "repo_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "date",
   {
     data_type => "datetime",
     datetime_undef_if_invalid => 1,
-    default_value => "current_timestamp()",
+    default_value => "current_timestamp",
     is_nullable => 0,
   },
   "data",

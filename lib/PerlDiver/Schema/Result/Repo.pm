@@ -41,7 +41,6 @@ __PACKAGE__->table("repo");
 =head2 id
 
   data_type: 'integer'
-  is_auto_increment: 1
   is_nullable: 0
 
 =head2 name
@@ -66,7 +65,7 @@ __PACKAGE__->table("repo");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
+  { data_type => "integer", is_nullable => 0 },
   "name",
   { data_type => "char", is_nullable => 0, size => 50 },
   "uri",

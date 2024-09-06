@@ -19,26 +19,9 @@ __PACKAGE__->load_namespaces;
 __PACKAGE__->meta->make_immutable(inline_constructor => 0);
 
 sub get_schema {
-  my @errors;
+  my $dsn = "dbi:SQLite:dbname=db/perldiver.db";
 
-  foreach (qw[DIVER_DB_HOST DIVER_DB_NAME DIVER_DB_USER DIVER_DB_PASS]) {
-    push @errors, $_ unless defined $ENV{$_};
-  }
-
-  if (@errors) {
-    die 'Please set the following environment variables: ',
-        join(', ', @errors), "\n";
-  }
-
-  my $dsn = "dbi:mysql:host=$ENV{DIVER_DB_HOST};database=$ENV{DIVER_DB_NAME}";
-  if ($ENV{DIVER_DB_PORT}) {
-    $dsn .= ";port=$ENV{DIVER_DB_PORT}";
-  }
-
-  my $sch = __PACKAGE__->connect(
-    $dsn, $ENV{DIVER_DB_USER}, $ENV{DIVER_DB_PASS},
-    { mysql_enable_utf8 => 1, quote_char => '`' },
-  );
+  my $sch = __PACKAGE__->connect($dsn);
 
   return $sch;
 }
