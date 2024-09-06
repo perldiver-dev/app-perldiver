@@ -12,7 +12,7 @@ isa_ok($schema, 'PerlDiver::Schema');
 my $dbh = $schema->storage->dbh;
 isa_ok($dbh, 'DBI::db');
 
-my $tables = $dbh->selectcol_arrayref('SHOW TABLES');
+my $tables = $dbh->selectcol_arrayref('SELECT name FROM sqlite_master WHERE type="table"');
 is_deeply($tables, [qw(file repo run run_file)], 'Correct tables in database');
 
 done_testing;
