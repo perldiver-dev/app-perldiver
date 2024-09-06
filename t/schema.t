@@ -19,6 +19,7 @@ my $schema = PerlDiver::Schema->get_schema();
 isa_ok($schema, 'PerlDiver::Schema');
 
 my $tables = $dbh->selectcol_arrayref('SELECT name FROM sqlite_master WHERE type="table"');
-is_deeply($tables, [qw(file repo run run_file)], 'Correct tables in database');
+my @expected_tables = qw(repo file run run_file);
+is_deeply([sort @$tables], [sort @expected_tables], 'Correct tables in database');
 
 done_testing;
