@@ -55,7 +55,8 @@ has schema => (
 );
 
 sub _build_schema {
-  return PerlDiver::Schema->get_schema;
+  my $self = shift;
+  return PerlDiver::Schema->get_schema($self->config);
 }
 
 has tt => (
