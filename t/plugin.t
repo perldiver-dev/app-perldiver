@@ -5,25 +5,36 @@ use Test::More;
 use Test::Exception;
 use App::PerlDiver::Role::Plugin;
 
-my $plugin = App::PerlDiver::Role::Plugin->new;
+{
+    package MockPlugin;
+    use Moose;
+    with 'App::PerlDiver::Role::Plugin';
 
-isa_ok($plugin, 'App::PerlDiver::Role::Plugin');
+    sub name { 'MockPlugin' }
+    sub data { return { name => 'MockPlugin', value => 5 } }
+    sub gather { return { name => 'MockPlugin', value => 5 } }
+    sub render { return 5 }
+}
+
+my $plugin = MockPlugin->new;
+
+isa_ok($plugin, 'MockPlugin');
 
 can_ok($plugin, qw(name data gather render));
 
 # Tests for the name method
-is($plugin->name, 'Plugin', 'name method returns correct value');
+is($plugin->name, 'MockPlugin', 'name method returns correct value');
 
 # Tests for the data method
 my $repo = {
     runs => [
         {
             date => '2023-01-01',
-            data => '{"Plugin":{"name":"Plugin","value":5}}'
+            data => '{"MockPlugin":{"name":"MockPlugin","value":5}}'
         },
         {
             date => '2023-01-02',
-            data => '{"Plugin":{"name":"Plugin","value":10}}'
+            data => '{"MockPlugin":{"name":"MockPlugin","value":10}}'
         }
     ]
 };
@@ -40,12 +51,12 @@ my $run = {
     }
 };
 my $gather_result = $plugin->gather($run);
-is($gather_result->{name}, 'Plugin', 'gather method returns correct name');
+is($gather_result->{name}, 'MockPlugin', 'gather method returns correct name');
 is($gather_result->{value}, 5, 'gather method returns correct value');
 
 # Tests for the render method
 my $run_render = {
-    data => '{"Plugin":{"name":"Plugin","value":5}}'
+    data => '{"MockPlugin":{"name":"MockPlugin","value":5}}'
 };
 my $render_result = $plugin->render($run_render);
 is($render_result, 5, 'render method returns correct value');
