@@ -7,6 +7,7 @@ requires 'File::Path';
 requires 'Git::Repository';
 requires 'JSON';
 requires 'LWP';
+requires 'LWP::Protocol::https';
 requires 'Module::Pluggable';
 requires 'Moose';
 requires 'Moose::Util::TypeConstraints';
