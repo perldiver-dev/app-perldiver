@@ -15,6 +15,7 @@ use Carp;
 use App::PerlDiver::Repo;
 use PerlDiver::Schema;
 use PerlDiver::AuthClient;
+use PerlDiver::Config;
 
 has do_gather => (
   is => 'ro',
@@ -89,6 +90,19 @@ has json => (
 
 sub _build_json {
   return JSON->new->pretty->utf8;
+}
+
+has config => (
+  is => 'ro',
+  isa => 'PerlDiver::Config',
+  lazy_build => 1,
+);
+
+sub _build_config {
+  my $self = shift;
+  my $config = PerlDiver::Config->new;
+  $config->load_config;
+  return $config;
 }
 
 sub run {
