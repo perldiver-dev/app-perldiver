@@ -18,3 +18,4 @@ requires 'Test::Exception';
 requires 'Test::LWP::UserAgent';
 requires 'Test::More';
 requires 'URI';
+requires 'YAML::XS';
