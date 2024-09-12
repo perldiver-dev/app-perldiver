@@ -22,8 +22,7 @@ use PerlDiver::Config;
 sub get_schema {
     my $self = shift;
     my ($config) = @_;
-    $config //= PerlDiver::Config->new;
-    $config->load_config;
+    $config //= PerlDiver::Config->new_from_file;
     return $self->connect($config->dsn, $config->user, $config->pass);
 }
 

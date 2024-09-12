@@ -1,25 +1,43 @@
-use Feature::Compat::Class;
+package PerlDiver::Config;
 
-class PerlDiver::Config {
+use Moose;
+use YAML::XS 'LoadFile';
 
-  use YAML::XS 'LoadFile';
+has 'database' => (
+    is => 'ro',
+    isa => 'Str',
+);
 
-  field $database :reader;
-  field $type :reader;
-  field $user :reader;
-  field $pass :reader;
+has 'type' => (
+    is => 'ro',
+    isa => 'Str',
+);
 
-  method load_config {
-    my $config_data = LoadFile('perldiver.yml');
-    $database = $config_data->{database};
-    $type = $config_data->{type};
-    $user = $config_data->{user};
-    $pass = $config_data->{pass};
-  }
+has 'user' => (
+    is => 'ro',
+    isa => 'Str',
+);
 
-  method dsn {
-    return "dbi:$type:dbname=$database";
-  }
+has 'pass' => (
+    is => 'ro',
+    isa => 'Str',
+);
+
+sub new_from_file {
+    my $class = shift;
+    my $file = (@_ ? $_[0] : 'perldiver.yml');
+    my $config_data = LoadFile($file);
+    return $class->new(
+        database => $config_data->{database},
+        type => $config_data->{type},
+        user => $config_data->{user},
+        pass => $config_data->{pass},
+    );
+}
+
+sub dsn {
+    my $self = shift;
+    return "dbi:" . $self->type . ":dbname=" . $self->database;
 }
 
 1;
