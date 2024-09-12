@@ -18,6 +18,9 @@ sub gather {
   my $self = shift;
   my ($run) = @_;
 
+  # Ensure $run is a blessed reference
+  die "Invalid run object" unless ref($run) && ref($run) ne 'HASH';
+
   return {
     name => 'CountFiles',
     value => $run->run_files->count

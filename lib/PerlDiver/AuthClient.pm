@@ -5,6 +5,7 @@ class PerlDiver::AuthClient {
   use LWP::UserAgent;
   use JSON;
   use URI;
+  use LWP::Protocol::https;
 
   field $ua :param ||= LWP::UserAgent->new;
   field $base_url :param ||= URI->new($ENV{PD_AUTH_URL} or 'https://pdauth.perlhacks.com/');
