@@ -101,9 +101,7 @@ has config => (
 
 sub _build_config {
   my $self = shift;
-  my $config = PerlDiver::Config->new;
-  $config->load_config;
-  return $config;
+  return PerlDiver::Config->new_from_file;
 }
 
 sub run {
