@@ -4,10 +4,10 @@ class PerlDiver::Config {
 
   use YAML::XS 'LoadFile';
 
-  field $database;
-  field $type;
-  field $user;
-  field $pass;
+  field $database :reader;
+  field $type :reader;
+  field $user :reader;
+  field $pass :reader;
 
   method load_config {
     my $config_data = LoadFile('perldiver.yml');
