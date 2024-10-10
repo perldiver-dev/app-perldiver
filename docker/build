@@ -1,0 +1,13 @@
+#!/bin/sh
+
+ver=`perl -nE "/VERSION = '([\d\.]+)'/ and print \\$1 and exit" lib/App/PerlDiver.pm`
+echo Building version $ver
+
+docker build -t davorg/perldiver:latest -t davorg/perldiver:perldiver_$ver -f docker/Dockerfile .
+
+if [ $? != 0 ]; then
+  echo "Docker build failed"
+  exit 1
+fi
+
+docker push -a docker.io/davorg/perldiver

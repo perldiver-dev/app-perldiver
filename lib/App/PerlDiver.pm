@@ -3,6 +3,8 @@ package App::PerlDiver;
 use 5.034000;
 use feature 'say';
 
+our $VERSION = '0.0.1';
+
 use Moose;
 use Moose::Util::TypeConstraints;
 
