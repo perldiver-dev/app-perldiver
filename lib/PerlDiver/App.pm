@@ -1,4 +1,4 @@
-package App::PerlDiver;
+package PerlDiver::App;
 
 use 5.034000;
 use feature 'say';
@@ -14,7 +14,7 @@ use Template;
 use JSON;
 use Carp;
 
-use App::PerlDiver::Repo;
+use PerlDiver::Repo;
 use PerlDiver::Schema;
 use PerlDiver::AuthClient;
 use PerlDiver::Config;
@@ -33,13 +33,13 @@ has do_render => (
   default => 1,
 );
 
-coerce 'App::PerlDiver::Repo' =>
+coerce 'PerlDiver::Repo' =>
   from 'Str' =>
-  via { App::PerlDiver::Repo->new(uri => $_) };
+  via { PerlDiver::Repo->new(uri => $_) };
 
 has repo => (
   is => 'ro',
-  isa => 'App::PerlDiver::Repo',
+  isa => 'PerlDiver::Repo',
   required => 1,
   coerce => 1,
 );

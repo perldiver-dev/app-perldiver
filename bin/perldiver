@@ -6,7 +6,7 @@ use warnings;
 use Getopt::Long;
 
 use PerlDiver::Schema;
-use App::PerlDiver;
+use PerlDiver::App;
 
 my %opts;
 GetOptions(\%opts, 'help|h', 'gather_only|g', 'render_only|r');
@@ -30,7 +30,7 @@ my ($repo) = $rs->search({
 
 die unless $repo;
 
-my $app = App::PerlDiver->new(
+my $app = PerlDiver::App->new(
   repo => $repo->uri,
   gather => $gather,
   render => $render,

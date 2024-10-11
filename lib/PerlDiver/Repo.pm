@@ -1,4 +1,4 @@
-package App::PerlDiver::Repo;
+package PerlDiver::Repo;
 
 use 5.034000;
 
@@ -11,16 +11,16 @@ use URI;
 use File::Path 'remove_tree';
 use Git::Repository;
 
-subtype 'App::PerlDiver::URI' =>
+subtype 'PerlDiver::URI' =>
   as 'URI';
 
-coerce 'App::PerlDiver::URI' =>
+coerce 'PerlDiver::URI' =>
   from Str =>
   via { URI->new($_) };
 
 has uri => (
   is => 'ro',
-  isa => 'App::PerlDiver::URI',
+  isa => 'PerlDiver::URI',
   required => 1,
   coerce => 1,
 );
