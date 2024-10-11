@@ -3,11 +3,11 @@ use warnings;
 
 use Test::More;
 use Test::Exception;
-use App::PerlDiver::Role::Plugin;
+use PerlDiver::Role::Plugin;
 
-my $plugin = App::PerlDiver::Role::Plugin->new;
+my $plugin = PerlDiver::Role::Plugin->new;
 
-isa_ok($plugin, 'App::PerlDiver::Role::Plugin');
+isa_ok($plugin, 'PerlDiver::Role::Plugin');
 
 can_ok($plugin, qw(name data gather render));
 

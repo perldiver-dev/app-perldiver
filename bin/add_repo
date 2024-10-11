@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use App::PerlDiver::Repo;
+use PerlDiver::Repo;
 use PerlDiver::Schema;
 
 die unless @ARGV;
@@ -11,7 +11,7 @@ die unless @ARGV;
 my $arg = shift @ARGV;
 $arg =~ s/\.git$//;
 
-my $repo = App::PerlDiver::Repo->new(uri => $arg);
+my $repo = PerlDiver::Repo->new(uri => $arg);
 
 my $sch = PerlDiver::Schema->get_schema;
 

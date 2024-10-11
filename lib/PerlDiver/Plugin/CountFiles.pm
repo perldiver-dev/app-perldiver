@@ -1,4 +1,4 @@
-package App::PerlDiver::Plugin::CountFiles;
+package PerlDiver::Plugin::CountFiles;
 
 use strict;
 use warnings;
@@ -12,7 +12,7 @@ has name => (
   default => 'CountFiles',
 );
 
-with 'App::PerlDiver::Role::Plugin';
+with 'PerlDiver::Role::Plugin';
 
 sub gather {
   my $self = shift;

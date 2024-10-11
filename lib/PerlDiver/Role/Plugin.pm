@@ -1,4 +1,4 @@
-package App::PerlDiver::Role::Plugin;
+package PerlDiver::Role::Plugin;
 
 use Moose::Role;
 

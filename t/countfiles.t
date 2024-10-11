@@ -3,11 +3,11 @@ use warnings;
 
 use Test::More;
 use Test::Exception;
-use App::PerlDiver::Plugin::CountFiles;
+use PerlDiver::Plugin::CountFiles;
 
-my $plugin = App::PerlDiver::Plugin::CountFiles->new;
+my $plugin = PerlDiver::Plugin::CountFiles->new;
 
-isa_ok($plugin, 'App::PerlDiver::Plugin::CountFiles');
+isa_ok($plugin, 'PerlDiver::Plugin::CountFiles');
 
 can_ok($plugin, qw(gather render data plot));
 
